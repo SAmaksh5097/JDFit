@@ -1,6 +1,7 @@
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Homepage from "./pages/Homepage"
+import ProfilePage from "./pages/ProfilePage"
 import {Routes, Route} from "react-router-dom"
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Homepage/>} />
+          <Route path="/profile" element={<ProfilePage/>} />
         </Routes>
       </main>
       <Footer/>
