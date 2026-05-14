@@ -81,22 +81,17 @@ const Create = () => {
             )}
 
             <div className="ml-auto">
-              <button
-                type="submit"
-                aria-disabled={!(jdText || file)}
-                className="p-1 rounded-full focus:outline-none"
-                title="Send"
-                disabled={!(jdText || file)}
-              >
-                <ArrowUpIcon
-                  className={
-                    `h-7 w-7 rounded-full border transition-all duration-300 ease-out ` +
-                    (jdText || file
-                      ? `opacity-100 translate-y-0 scale-100`
-                      : `opacity-0 -translate-y-2 scale-75 pointer-events-none`)
-                  }
-                />
-              </button>
+              { (jdText || file) && (
+                <button
+                  type="submit"
+                  className="p-1 rounded-full focus:outline-none"
+                  title="Send"
+                >
+                  <ArrowUpIcon
+                    className={`h-7 w-7 rounded-full border transition-all duration-300 ease-out opacity-100 translate-y-0 scale-100`}
+                  />
+                </button>
+              )}
             </div>
           </div>
 
