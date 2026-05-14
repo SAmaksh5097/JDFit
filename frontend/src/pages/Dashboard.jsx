@@ -1,12 +1,12 @@
-import { User2, UserPenIcon } from "lucide-react"
+import { UserPenIcon } from "lucide-react"
 import ResumeCard from "../components/ResumeCard"
 import { Link } from "react-router-dom"
 const Dashboard = () => {
     const resumes = [
         {
             id: 1,
-            name: "John Doe's Resume",
-            company: "Tech Corp",
+            name: "Samaksh Resume",
+            company: "Google",
             lastEdited: "2026-06-01",
             match: 85,
             status: "Ready to apply",
@@ -63,9 +63,11 @@ const Dashboard = () => {
                             <Link to="/profile" title="Edit Profile">
                                 <UserPenIcon className="h-7 w-7 "/>
                             </Link>
-                            <button className="rounded-full bg-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:bg-blue-400">
-                                New Resume
-                            </button>
+                            <Link to="/create">
+                                <button className="rounded-full bg-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 hover:bg-blue-400">
+                                    New Resume
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
