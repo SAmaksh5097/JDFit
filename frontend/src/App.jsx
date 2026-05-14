@@ -1,5 +1,6 @@
 import Footer from "./components/Footer"
 import Header from "./components/Header"
+import Dashboard from "./pages/Dashboard"
 import Homepage from "./pages/Homepage"
 import ProfilePage from "./pages/ProfilePage"
 import {Routes, Route} from "react-router-dom"
@@ -11,6 +12,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Homepage/>} />
           <Route path="/profile" element={<ProfilePage/>} />
+          <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
       </main>
       <Footer/>
