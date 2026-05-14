@@ -1,8 +1,12 @@
+import HeaderMin from "../components/HeaderMin"
 import ProfileForm from "../components/ProfileForm"
 
 const ProfilePage = () => {
   return (
-    <ProfileForm/>
+    <>
+      <HeaderMin/>
+      <ProfileForm/>
+    </>
   )
 }
 
