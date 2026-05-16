@@ -2,6 +2,7 @@ import { UserPenIcon } from "lucide-react"
 import ResumeCard from "../components/ResumeCard"
 import { Link } from "react-router-dom"
 import HeaderMin from "../components/HeaderMin"
+
 const Dashboard = () => {
     const resumes = [
         {
@@ -76,6 +77,13 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                        {resumes.length === 0?(
+                            <Skeleton variant="rectangular" width="100%" height="200px" />
+                        ):(
+                            resumes.map((resume)=>{
+                                <ResumeCard key={resume.id} resume={resume} formatDate={formatDate} />
+                            })
+                        )}
                         {resumes.map((resume) => (
                             <ResumeCard key={resume.id} resume={resume} formatDate={formatDate} />
                         ))}

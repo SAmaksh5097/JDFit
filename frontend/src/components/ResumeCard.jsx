@@ -1,4 +1,5 @@
 import { PencilIcon } from "lucide-react"
+import { Link } from "react-router-dom"
 
 const ResumeCard = ({ resume, formatDate }) => {
   return (
@@ -30,12 +31,14 @@ const ResumeCard = ({ resume, formatDate }) => {
       </div>
 
       <div className="mt-5 flex items-center justify-between">
-        <button className="text-sm font-semibold text-blue-300 transition hover:text-blue-200">
-          Open resume
-        </button>
-        <button title="Edit Resume" className="rounded-full border-slate-700 p-1 text-sm text-slate-300 transition hover:border-slate-500 hover:bg-slate-800">
+        <Link to="/preview">
+          <button className="text-sm font-semibold text-blue-300 transition hover:text-blue-200 hover:bg-blue-500/10 rounded-lg px-3 py-1">
+            Open resume
+          </button>
+        </Link>
+        {/* <button title="Edit Resume" className="rounded-full border-slate-700 p-1 text-sm text-slate-300 transition hover:border-slate-500 hover:bg-slate-800">
             <PencilIcon/>
-        </button>
+        </button> */}
       </div>
     </article>
   )

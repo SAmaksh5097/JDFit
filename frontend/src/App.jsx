@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard"
 import Homepage from "./pages/Homepage"
 import ProfilePage from "./pages/ProfilePage"
 import Create from "./pages/Create"
+import PreviewPage from "./pages/PreviewPage"
 import {Routes, Route} from "react-router-dom"
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
           <Route path="/profile" element={<ProfilePage/>} />
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/create" element={<Create/>}/>
+          <Route path="/preview" element={<PreviewPage/>}/>
         </Routes>
       </main>
       <Footer/>
