@@ -1,11 +1,15 @@
-import { ArrowUpIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import { useState } from "react";
 import HeaderMin from "../components/HeaderMin";
+import PreviewPage from "./PreviewPage";
 
 const Create = () => {
   const [jdText, setJdText] = useState("");
+  const [instructions, setInstructions] = useState("");
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
 
   const handleFileChange = (e) => {
     setError("");
@@ -42,66 +46,92 @@ const Create = () => {
       setError("Please paste a JD or attach a file before sending.");
       return;
     }
-    // For now we just log the payload. Replace with real submit logic later.
-    console.log("Submitting JD:", { jdText, file });
     setError("");
+    
+    // trigger fade out
+    setIsSubmitted(true);
+    
+    // wait for fade out to finish before mounting preview
+    setTimeout(() => {
+      setShowPreview(true);
+    }, 400);
   };
+
+  if (showPreview) {
+    return (
+      <div className="animate-in fade-in duration-500">
+        <PreviewPage />
+      </div>
+    );
+  }
 
   return (
     <>
-        <HeaderMin/>
-        <section className="max-w-3xl mx-auto p-6">
-        <div className="bg-gray-900 p-6 rounded-lg shadow-md">
-            <form onSubmit={handleSubmit} className="space-y-4">
-            <textarea
-                placeholder="Paste the JD here..."
-                className="w-full min-h-[10rem] bg-gray-800 text-white p-4 rounded-lg resize-y"
-                value={jdText}
-                onChange={(e) => setJdText(e.target.value)}
-            />
-
-            <div className="flex items-center gap-4">
-                <label className="inline-flex items-center px-3 py-2 bg-gray-700 text-sm text-white rounded cursor-pointer">
-                Attach file
-                <input
-                    id="jd-file-input"
-                    type="file"
-                    accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    onChange={handleFileChange}
-                    className="hidden"
+      <HeaderMin />
+      <div className={`transition-opacity duration-400 ease-in-out ${isSubmitted ? "opacity-0" : "opacity-100"}`}>
+        <section className="max-w-5xl mx-auto p-6 flex flex-col md:flex-row gap-6 items-center">
+          {/* Left Column for Inputs */}
+          <div className="flex-1 flex flex-col gap-6">
+            <div className="bg-gray-900 p-6 rounded-lg shadow-md">
+              <form id="create-form" onSubmit={handleSubmit} className="space-y-4">
+                <textarea
+                  placeholder="Paste the JD here..."
+                  className="w-full min-h-[10rem] bg-gray-800 text-white p-4 rounded-lg resize-y outline-none focus:ring-2 focus:ring-blue-500"
+                  value={jdText}
+                  onChange={(e) => setJdText(e.target.value)}
                 />
-                </label>
 
-                {file ? (
-                <div className="flex items-center gap-3 text-sm text-gray-200">
-                    <div className="bg-gray-700 px-3 py-1 rounded">{file.name}</div>
-                    <button type="button" onClick={removeFile} className="text-xs text-red-400 hover:underline">
-                    Remove
-                    </button>
-                </div>
-                ) : (
-                <div className="text-sm text-gray-400">No file attached (only one allowed)</div>
-                )}
-
-                <div className="ml-auto">
-                { (jdText || file) && (
-                    <button
-                    type="submit"
-                    className="p-1 rounded-full focus:outline-none"
-                    title="Send"
-                    >
-                    <ArrowUpIcon
-                        className={`h-7 w-7 rounded-full border transition-all duration-300 ease-out opacity-100 translate-y-0 scale-100`}
+                <div className="flex items-center gap-4 border-t border-gray-700 pt-4">
+                  <label className="inline-flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 transition-colors text-sm text-white rounded-md cursor-pointer border border-gray-600">
+                    Attach file
+                    <input
+                      id="jd-file-input"
+                      type="file"
+                      accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      onChange={handleFileChange}
+                      className="hidden"
                     />
-                    </button>
-                )}
+                  </label>
+
+                  {file ? (
+                    <div className="flex items-center gap-3 text-sm text-gray-200">
+                      <div className="bg-gray-700 px-3 py-1 rounded truncate max-w-[200px]">{file.name}</div>
+                      <button type="button" onClick={removeFile} className="text-xs text-red-400 hover:text-red-300 hover:underline">
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="text-sm text-gray-400">No file attached (only one allowed)</div>
+                  )}
                 </div>
+
+                {error && <p className="text-sm text-red-400">{error}</p>}
+              </form>
             </div>
 
-            {error && <p className="text-sm text-red-400">{error}</p>}
-            </form>
-        </div>
+            <div className="bg-gray-900 p-6 rounded-lg shadow-md">
+              <textarea
+                value={instructions}
+                onChange={(e) => setInstructions(e.target.value)}
+                placeholder="Any additional instructions or details..."
+                className="w-full min-h-[10rem] bg-gray-800 text-white p-4 rounded-lg resize-y outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          {/* Right Column for Submit Button */}
+          <div className="md:w-32 h-fit flex">
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 flex flex-col items-center justify-center gap-2 group min-h-[120px] md:min-h-full p-1"
+              title="Generate"
+            >
+              <ArrowRightIcon className="h-8 w-8 group-hover:translate-x-1 transition-transform" />
+              <span className="text-lg">Generate</span>
+            </button>
+          </div>
         </section>
+      </div>
     </>
   );
 };
