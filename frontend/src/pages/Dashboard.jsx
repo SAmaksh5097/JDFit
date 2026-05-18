@@ -1,38 +1,35 @@
-import { UserPenIcon } from "lucide-react"
+import { UserPenIcon, Loader2Icon } from "lucide-react"
 import ResumeCard from "../components/ResumeCard"
 import { Link } from "react-router-dom"
 import HeaderMin from "../components/HeaderMin"
+import { useEffect, useState } from "react"
+import { useAuth } from "@clerk/clerk-react"
 
 const Dashboard = () => {
-    const resumes = [
-        {
-            id: 1,
-            name: "Samaksh Resume",
-            company: "Google",
-            lastEdited: "2026-06-01",
-            match: 85,
-            status: "Ready to apply",
-            jdSummary: "Experienced software engineer with a strong background in full-stack development, specializing in React and Node.js."
-        },
-        {
-            id: 2,
-            name: "Jane Smith's Resume",
-            company: "Innovate Inc",
-            lastEdited: "2026-05-28",
-            match: 90,
-            status: "High impact",
-            jdSummary: "Creative product designer with a passion for user experience and a proven track record of delivering innovative solutions." 
-        },
-        {
-            id: 3,
-            name: "Product Designer Resume",
-            company: "Northstar Labs",
-            lastEdited: "2026-05-23",
-            match: 78,
-            status: "Needs tailoring",
-            jdSummary: "Skilled product designer with expertise in user-centered design, prototyping, and a strong portfolio of successful projects."
-        },
-    ]
+    const { userId } = useAuth()
+    const [resumes, setResumes] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+
+    useEffect(() => {
+        if (!userId) return;
+
+        const fetchResumes = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/api/resume/user/${userId}`);
+                if (!response.ok) throw new Error('Failed to fetch resumes');
+                const data = await response.json();
+                setResumes(data);
+            } catch (err) {
+                console.error(err);
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchResumes();
+    }, [userId])
 
     const formatDate = (value) =>
         new Date(value).toLocaleDateString("en-US", {
@@ -77,16 +74,27 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-                        {resumes.length === 0?(
-                            <Skeleton variant="rectangular" width="100%" height="200px" />
-                        ):(
-                            resumes.map((resume)=>{
-                                <ResumeCard key={resume.id} resume={resume} formatDate={formatDate} />
-                            })
+                        {loading ? (
+                            <div className="flex justify-center p-8 col-span-full">
+                                <Loader2Icon className="h-8 w-8 animate-spin text-blue-500" />
+                            </div>
+                        ) : error ? (
+                            <div className="text-red-500 col-span-full">{error}</div>
+                        ) : resumes.length === 0 ? (
+                            <div className="text-gray-400 col-span-full font-medium">No resumes found. Create one!</div>
+                        ) : (
+                            resumes.map((resume) => (
+                                <ResumeCard key={resume.id} resume={{
+                                    id: resume.id,
+                                    name: resume.resume_name,
+                                    company: resume.company_name,
+                                    lastEdited: resume.created_at,
+                                    match: resume.match || 0,
+                                    status: "Ready to apply",
+                                    jdSummary: "Generated Resume"
+                                }} formatDate={formatDate} />
+                            ))
                         )}
-                        {resumes.map((resume) => (
-                            <ResumeCard key={resume.id} resume={resume} formatDate={formatDate} />
-                        ))}
                     </div>
                 </div>
             </section>

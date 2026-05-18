@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import profileRoutes from './routes/profileRoutes.js';
+import resumeRoutes from './routes/resumeRoutes.js';
 import db from './config/db.js';
 const app = express();
 
@@ -35,3 +36,4 @@ app.get('/', (req,res)=>{
 
 // Routes
 app.use('/api/profile', profileRoutes);
+app.use('/api/resume', resumeRoutes);

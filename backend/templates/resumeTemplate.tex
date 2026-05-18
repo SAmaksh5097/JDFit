@@ -1,0 +1,135 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{url}
+\usepackage{parskip} 	
+\usepackage{hyperref}
+\usepackage{graphicx}
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.92]{geometry}
+\usepackage{tabularx}
+\usepackage{enumitem}
+
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+\usepackage{supertabular}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{7pt}{7pt}
+
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+\usepackage{fontawesome5}
+
+%----------------------------------------------------------------------------------------
+\linespread{0.94}
+\begin{document}
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+\begin{tabularx}{\linewidth}{@{} C @{}}
+\Huge{Name} \\[5pt]
+\href{mailto:sample@gmail.com}{\raisebox{-0.05\height}\faEnvelope\ \underline{sample@gmail.com}} \ $|$ \
+\href{https://github.com/sample}{\raisebox{-0.05\height}\faGithub\ \underline{GitHub}} \ $|$ \ 
+\href{https://linkedin.com/in/sample}{\raisebox{-0.05\height}\faLinkedin\ \underline{LinkedIn}} \ $|$ \
+\href{tel:+911234567890}{\raisebox{-0.05\height}\faMobile\ +91 1234567890} \\
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+\section{Education}
+\begin{tabularx}{\linewidth}{@{}l X@{}}	
+\textbf{Institution Name} & \hfill \textbf{CGPA} \\
+\textit{Degree Name} & \hfill \textit{2023 -- 2027} \\[2pt]
+\textbf{Institution Name} & \hfill \textbf{CGPA} \\
+\textit{Degree Name} & \hfill \textit{2023 -- 2027} \\[2pt]
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	PROJECTS
+%----------------------------------------------------------------------------------------
+\section{Projects}
+
+\begin{tabularx}{\linewidth}{@{}X r@{}}
+\textbf{Project1} \ | \ \textit{tech stack}
+    & \href{link}{\small Link} \\
+\end{tabularx}
+\vspace{-6pt}
+\begin{itemize}[nosep, leftmargin=1em, itemsep=2pt]
+    \item {point1}
+    \item {point2}
+\end{itemize}
+
+\begin{tabularx}{\linewidth}{@{}X r@{}}
+\textbf{Project2} \ | \ \textit{tech stack}
+    & \href{link}{\small Link} \\
+\end{tabularx}
+\vspace{-6pt}
+\begin{itemize}[nosep, leftmargin=1em, itemsep=2pt]
+    \item {point1}.
+    \item {point2}
+\end{itemize}
+
+\begin{tabularx}{\linewidth}{@{}X r@{}}
+\textbf{Project3} \ | \ \textit{tech stack}
+    & \href{link}{\small Link} \\
+\end{tabularx}
+\vspace{-6pt}
+\begin{itemize}[nosep, leftmargin=1em, itemsep=2pt]
+    \item {point1}
+    \item {point2}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+%	SKILLS
+%----------------------------------------------------------------------------------------
+\section{Technical Skills}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\textbf{Languages:} & \normalsize{Java, JavaScript, Python, C++, SQL, HTML/CSS}\\
+\textbf{Backend:} & \normalsize{Node.js, Express.js, REST API Design, MongoDB (NoSQL), PostgreSQL (Relational)}\\
+\textbf{Frontend:} & \normalsize{React.js, TailwindCSS, Bootstrap, Vite}\\
+\textbf{AI / ML:} & \normalsize{LLM APIs (Gemini, Ollama), RAG Pipelines, Vector Search, Prompt Engineering}\\
+\textbf{Tools \& Practices:} & \normalsize{Git, GitHub, Postman, VS Code, Code Reviews, Debugging \& Testing, Technical Documentation}\\
+\textbf{CS Fundamentals:} & \normalsize{core concepts}\\
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	ACHIEVEMENTS
+%----------------------------------------------------------------------------------------
+\section{Achievements}
+\begin{itemize}[nosep, leftmargin=1em, itemsep=2pt]
+    \item {point1}.
+    \item {point2}.
+    \item {point3}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+%	EXTRACURRICULAR
+%----------------------------------------------------------------------------------------
+\section{Extracurricular}
+\begin{itemize}[nosep, leftmargin=1em, itemsep=2pt, label={}]
+    \item 
+    \textbf{Position} \hfill \textit{timeline} \\
+    \textit{Organization Name}
+    \begin{itemize}[nosep, leftmargin=1em, label=\textbullet]
+        \item {overview point 1}
+        \item {overview point 2}
+    \end{itemize}
+\end{itemize}
+
+\end{document}

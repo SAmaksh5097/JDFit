@@ -1,15 +1,21 @@
 import { ArrowRightIcon } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 import HeaderMin from "../components/HeaderMin";
 import PreviewPage from "./PreviewPage";
 
 const Create = () => {
+  const { userId } = useAuth();
+  const navigate = useNavigate();
   const [jdText, setJdText] = useState("");
   const [instructions, setInstructions] = useState("");
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [latexCode, setLatexCode] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleFileChange = (e) => {
     setError("");
@@ -40,29 +46,58 @@ const Create = () => {
     if (input) input.value = "";
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!jdText && !file) {
       setError("Please paste a JD or attach a file before sending.");
       return;
     }
+    if (!userId) {
+      setError("User not authenticated.");
+      return;
+    }
     setError("");
-    
-    // trigger fade out
-    setIsSubmitted(true);
-    
-    // wait for fade out to finish before mounting preview
-    setTimeout(() => {
-      setShowPreview(true);
-    }, 400);
+    setIsGenerating(true);
+
+    try {
+      // Create JSON payload
+      // TODO: Handle file extraction later as user said "leave pdf compile for now"
+      const response = await fetch("http://localhost:5000/api/resume/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          jobDescription: jdText,
+          instructions: instructions
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate resume.");
+      }
+
+      const data = await response.json();
+      setLatexCode(data.latexCode);
+
+      // trigger fade out
+      setIsSubmitted(true);
+      
+      // Navigate to the preview page with the new resume ID
+      setTimeout(() => {
+        navigate(`/preview/${data.resumeId}`);
+      }, 400);
+
+    } catch (err) {
+      setError(err.message || "An error occurred during generation.");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   if (showPreview) {
-    return (
-      <div className="animate-in fade-in duration-500">
-        <PreviewPage />
-      </div>
-    );
+    return null; // Navigation handles it now
   }
 
   return (
@@ -123,11 +158,12 @@ const Create = () => {
           <div className="md:w-32 h-fit flex">
             <button
               onClick={handleSubmit}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 flex flex-col items-center justify-center gap-2 group min-h-[120px] md:min-h-full p-1"
+              disabled={isGenerating}
+              className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 flex flex-col items-center justify-center gap-2 group min-h-[120px] md:min-h-full p-1 ${isGenerating ? 'opacity-50 cursor-not-allowed' : ''}`}
               title="Generate"
             >
-              <ArrowRightIcon className="h-8 w-8 group-hover:translate-x-1 transition-transform" />
-              <span className="text-lg">Generate</span>
+              <ArrowRightIcon className={`h-8 w-8 transition-transform ${isGenerating ? 'animate-pulse' : 'group-hover:translate-x-1'}`} />
+              <span className="text-lg">{isGenerating ? 'Generating...' : 'Generate'}</span>
             </button>
           </div>
         </section>

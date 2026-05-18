@@ -31,7 +31,7 @@ const ResumeCard = ({ resume, formatDate }) => {
       </div>
 
       <div className="mt-5 flex items-center justify-between">
-        <Link to="/preview">
+        <Link to={`/preview/${resume.id}`}>
           <button className="text-sm font-semibold text-blue-300 transition hover:text-blue-200 hover:bg-blue-500/10 rounded-lg px-3 py-1">
             Open resume
           </button>
