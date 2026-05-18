@@ -93,14 +93,14 @@ const ProfileForm = () => {
                 Phone Number
                 <input className={fieldBaseClass} type="tel" name="phone"/>
               </label>
-              <label className="text-sm text-slate-200 sm:col-span-2">
-                Professional Summary
-                <textarea
-                  className={fieldBaseClass}
-                  name="summary"
-                  rows="4"
-                  placeholder="Write a concise summary that highlights your impact and strengths..."
-                />
+              <label className="text-sm text-slate-200">
+                LinkedIn Profile
+                <input className={fieldBaseClass} type="url" name="linkedin" placeholder="https://linkedin.com/in/yourprofile" />
+              </label>
+
+              <label className="text-sm text-slate-200">
+                GitHub Profile
+                <input className={fieldBaseClass} type="url" name="github" placeholder="https://github.com/yourusername" />
               </label>
             </div>
           </div>
@@ -213,6 +213,10 @@ const ProfileForm = () => {
                         To (or Expected)
                         <input className={fieldBaseClass} type="text" name={`to-${entry.id}`} placeholder="YYYY" />
                       </label>
+                      <label className="text-sm text-slate-200 w-[10%] sm:col-span-2">
+                        CGPA
+                        <input className={fieldBaseClass} type="text" name={`cgpa-${entry.id}`} />
+                      </label>
                     </div>
                   </div>
                 ))}
@@ -309,8 +313,8 @@ const ProfileForm = () => {
                         <input className={fieldBaseClass} type="text" name={`projectName-${entry.id}`} placeholder="Portfolio Redesign" />
                       </label>
                       <label className="text-sm text-slate-200">
-                        Role/Contribution
-                        <input className={fieldBaseClass} type="text" name={`projectRole-${entry.id}`} placeholder="Sole Designer & Developer" />
+                        Tech Stack
+                        <input className={fieldBaseClass} type="text" name={`projectRole-${entry.id}`} />
                       </label>
                       <label className="text-sm text-slate-200 sm:col-span-2">
                         Link
