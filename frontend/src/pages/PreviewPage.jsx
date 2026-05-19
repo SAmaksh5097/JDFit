@@ -60,7 +60,7 @@ const PreviewPage = ({ initialLatexCode = "" }) => {
 
     setSaving(true)
     try {
-      const response = await fetch(`http://localhost:5000/api/resume/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/resume/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

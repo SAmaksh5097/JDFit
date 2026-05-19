@@ -20,7 +20,7 @@ const ProfileForm = () => {
 
   useEffect(() => {
     if (userId) {
-      fetch(`http://localhost:5000/api/profile/${userId}`)
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/${userId}`)
         .then((res) => res.json())
         .then((data) => {
           if (data && data.profile) {
@@ -141,7 +141,7 @@ const ProfileForm = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/profile', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
