@@ -3,53 +3,25 @@ import { useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import HeaderMin from "../components/HeaderMin";
-import PreviewPage from "./PreviewPage";
 
 const Create = () => {
   const { userId } = useAuth();
   const navigate = useNavigate();
   const [jdText, setJdText] = useState("");
   const [instructions, setInstructions] = useState("");
-  const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [latexCode, setLatexCode] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleFileChange = (e) => {
-    setError("");
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-    if (files.length > 1) {
-      setError("Only one file is allowed.");
-      return;
-    }
-    const f = files[0];
-    const allowedTypes = [
-      "application/pdf",
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ];
-    if (!allowedTypes.includes(f.type) && !/\.(pdf|doc|docx)$/i.test(f.name)) {
-      setError("Unsupported file type. Use PDF or Word documents.");
-      return;
-    }
-    setFile(f);
-  };
+  
 
-  const removeFile = () => {
-    setFile(null);
-    setError("");
-    // also reset the input value if needed (uncontrolled input)
-    const input = document.getElementById("jd-file-input");
-    if (input) input.value = "";
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!jdText && !file) {
-      setError("Please paste a JD or attach a file before sending.");
+    if (!jdText) {
+      setError("Please paste a JD before sending.");
       return;
     }
     if (!userId) {
@@ -115,31 +87,7 @@ const Create = () => {
                   value={jdText}
                   onChange={(e) => setJdText(e.target.value)}
                 />
-
-                <div className="flex items-center gap-4 border-t border-gray-700 pt-4">
-                  <label className="inline-flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 transition-colors text-sm text-white rounded-md cursor-pointer border border-gray-600">
-                    Attach file
-                    <input
-                      id="jd-file-input"
-                      type="file"
-                      accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                      onChange={handleFileChange}
-                      className="hidden"
-                    />
-                  </label>
-
-                  {file ? (
-                    <div className="flex items-center gap-3 text-sm text-gray-200">
-                      <div className="bg-gray-700 px-3 py-1 rounded truncate max-w-50">{file.name}</div>
-                      <button type="button" onClick={removeFile} className="text-xs text-red-400 hover:text-red-300 hover:underline">
-                        Remove
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="text-sm text-gray-400">No file attached (only one allowed)</div>
-                  )}
-                </div>
-
+  
                 {error && <p className="text-sm text-red-400">{error}</p>}
               </form>
             </div>
