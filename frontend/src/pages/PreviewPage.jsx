@@ -30,7 +30,7 @@ const PreviewPage = ({ initialLatexCode = "" }) => {
       const fetchResume = async () => {
         try {
           // Pass userId in query params so backend can verify ownership
-          const response = await fetch(`http://localhost:5000/api/resume/${id}?userId=${userId}`);
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/resume/${id}?userId=${userId}`);
           if (!response.ok) {
             if (response.status === 404) throw new Error("Resume not found or unauthorized");
             throw new Error("Failed to fetch resume");
