@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const HeroSection = () => {
   return (
     <section className="w-full min-h-screen flex items-center justify-center relative overflow-hidden">
@@ -17,9 +19,11 @@ const HeroSection = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <button className="p-4 bg-blue-600 text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-blue-700 hover:shadow-2xl hover:shadow-blue-500/40 ">
-                    Try Now
-                </button>
+                <Link to="/dashboard">
+                    <button className="p-4 bg-blue-600 text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-blue-700 hover:shadow-2xl hover:shadow-blue-500/40 ">
+                        Try Now
+                    </button>
+                </Link>
             </div>
         </div>
     </section>
