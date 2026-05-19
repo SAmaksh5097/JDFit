@@ -7,8 +7,8 @@ import PreviewPage from "./pages/PreviewPage"
 import {Routes, Route} from "react-router-dom"
 const App = () => {
   return (
-    <div className="bg-black min-h-screen text-white relative flex flex-col">
-      <main className="flex-1">
+    <div className="bg-black min-h-screen text-white relative flex flex-col overflow-x-hidden">
+      <main className="flex-1 w-full">
         <Routes>
           <Route path="/" element={<Homepage/>} />
           <Route path="/profile" element={<ProfilePage/>} />

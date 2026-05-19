@@ -162,54 +162,55 @@ const ProfileForm = () => {
   }
 
   if (isLoading) {
-    return <div className="min-h-screen grid place-items-center bg-black text-white">Loading profile details...</div>
+    return <div className="min-h-screen grid place-items-center bg-black text-white text-sm sm:text-base">Loading profile details...</div>
   }
 
   return (
-    <section className="min-h-screen bg-linear-to-b from-black via-black to-blue-950/20 px-4 py-8 sm:px-8 sm:py-10">
-      <div className="mx-auto max-w-5xl rounded-3xl border border-white/10 bg-black/80 p-4 shadow-2xl shadow-blue-900/10 sm:p-8">
-        <div className="mb-8 flex items-end justify-between gap-4">
+    <section className="min-h-screen bg-gradient-to-b from-black via-black to-blue-950/10 px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10">
+      <div className="mx-auto max-w-6xl rounded-2xl sm:rounded-3xl border border-white/10 bg-black/80 p-4 sm:p-6 md:p-8 shadow-2xl shadow-blue-900/10">
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-0">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-300">Profile Setup</p>
-            <h1 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">Build your profile</h1>
+            <p className="text-xs font-semibold uppercase tracking-wider text-blue-300">Profile Setup</p>
+            <h1 className="mt-1 sm:mt-2 text-xl sm:text-2xl md:text-3xl font-semibold text-white">Build your profile</h1>
           </div>
-
         </div>
 
-        <div className="mb-8 grid grid-cols-3 items-center gap-4">
-          <div className="flex items-center gap-3">
-            <span className="grid h-7 w-7 place-items-center rounded-full bg-blue-600 text-xs font-bold text-white">1</span>
-            <span className="text-sm font-medium text-blue-200">Personal Info</span>
+        <div className="mb-6 sm:mb-8 grid grid-cols-3 items-center gap-2 sm:gap-4 text-xs sm:text-sm">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="grid h-6 w-6 sm:h-7 sm:w-7 place-items-center rounded-full bg-blue-600 text-xs sm:text-sm font-bold text-white flex-shrink-0">1</span>
+            <span className="font-medium text-blue-200 hidden sm:inline">Personal Info</span>
+            <span className="font-medium text-blue-200 sm:hidden">Info</span>
           </div>
           <div className="h-0.5 bg-white/10" />
-          <div className="text-right text-sm text-slate-400">Experience & Skills</div>
+          <div className="text-right text-slate-400 hidden sm:block">Experience & Skills</div>
+          <div className="text-right text-slate-400 sm:hidden">More</div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
           <div className={sectionClass}>
-            <h2 className="text-lg font-semibold text-white">Personal Information</h2>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              <label className="text-sm text-slate-200">
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold text-white">Personal Information</h2>
+            <div className="mt-4 sm:mt-5 grid gap-3 sm:gap-4 sm:grid-cols-2">
+              <label className="text-xs sm:text-sm text-slate-200">
                 Full Name*
                 <input className={fieldBaseClass} type="text" required name="fullName" defaultValue={profileData?.name || ''} />
               </label>
               
-              <label className="text-sm text-slate-200">
+              <label className="text-xs sm:text-sm text-slate-200">
                 Email Address*
                 <input className={fieldBaseClass} required type="email" name="email" defaultValue={profileData?.email || ''} />
               </label>
-              <label className="text-sm text-slate-200">
+              <label className="text-xs sm:text-sm text-slate-200">
                 Phone Number
                 <input className={fieldBaseClass} type="tel" name="phone" defaultValue={profileData?.phone || ''} />
               </label>
-              <label className="text-sm text-slate-200">
+              <label className="text-xs sm:text-sm text-slate-200">
                 LinkedIn Profile
-                <input className={fieldBaseClass} type="url" name="linkedin" placeholder="https://linkedin.com/in/yourprofile" defaultValue={profileData?.social_links?.find(l => l.platform_name === 'LinkedIn')?.url || ''} />
+                <input className={fieldBaseClass} type="url" name="linkedin" placeholder="https://linkedin.com/in/..." defaultValue={profileData?.social_links?.find(l => l.platform_name === 'LinkedIn')?.url || ''} />
               </label>
 
-              <label className="text-sm text-slate-200">
+              <label className="text-xs sm:text-sm text-slate-200">
                 GitHub Profile
-                <input className={fieldBaseClass} type="url" name="github" placeholder="https://github.com/yourusername" defaultValue={profileData?.social_links?.find(l => l.platform_name === 'GitHub')?.url || ''} />
+                <input className={fieldBaseClass} type="url" name="github" placeholder="https://github.com/..." defaultValue={profileData?.social_links?.find(l => l.platform_name === 'GitHub')?.url || ''} />
               </label>
             </div>
           </div>
