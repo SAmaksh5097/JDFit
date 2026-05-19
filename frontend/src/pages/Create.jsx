@@ -111,7 +111,7 @@ const Create = () => {
               <form id="create-form" onSubmit={handleSubmit} className="space-y-4">
                 <textarea
                   placeholder="Paste the JD here..."
-                  className="w-full min-h-[10rem] bg-gray-800 text-white p-4 rounded-lg resize-y outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full min-h-40 bg-gray-800 text-white p-4 rounded-lg resize-y outline-none focus:ring-2 focus:ring-blue-500"
                   value={jdText}
                   onChange={(e) => setJdText(e.target.value)}
                 />
@@ -130,7 +130,7 @@ const Create = () => {
 
                   {file ? (
                     <div className="flex items-center gap-3 text-sm text-gray-200">
-                      <div className="bg-gray-700 px-3 py-1 rounded truncate max-w-[200px]">{file.name}</div>
+                      <div className="bg-gray-700 px-3 py-1 rounded truncate max-w-50">{file.name}</div>
                       <button type="button" onClick={removeFile} className="text-xs text-red-400 hover:text-red-300 hover:underline">
                         Remove
                       </button>
@@ -149,7 +149,7 @@ const Create = () => {
                 value={instructions}
                 onChange={(e) => setInstructions(e.target.value)}
                 placeholder="Any additional instructions or details..."
-                className="w-full min-h-[10rem] bg-gray-800 text-white p-4 rounded-lg resize-y outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full min-h-40 bg-gray-800 text-white p-4 rounded-lg resize-y outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -159,7 +159,7 @@ const Create = () => {
             <button
               onClick={handleSubmit}
               disabled={isGenerating}
-              className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 flex flex-col items-center justify-center gap-2 group min-h-[120px] md:min-h-full p-1 ${isGenerating ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 flex flex-col items-center justify-center gap-2 group min-h-30 md:min-h-full p-1 ${isGenerating ? 'opacity-50 cursor-not-allowed' : ''}`}
               title="Generate"
             >
               <ArrowRightIcon className={`h-8 w-8 transition-transform ${isGenerating ? 'animate-pulse' : 'group-hover:translate-x-1'}`} />

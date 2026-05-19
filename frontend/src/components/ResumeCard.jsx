@@ -15,14 +15,10 @@ const ResumeCard = ({ resume, formatDate }) => {
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 text-sm text-slate-300">
+      <div className="mt-5 text-sm text-slate-300">
         <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-3">
           <p className="text-xs uppercase tracking-[0.22em] text-slate-500">Last edited</p>
           <p className="mt-1 font-medium text-white">{formatDate(resume.lastEdited)}</p>
-        </div>
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-3">
-          <p className="text-xs uppercase tracking-[0.22em] text-green-400">Match</p>
-          <p className="mt-1 font-medium text-green-400">{resume.match}%</p>
         </div>
       </div>
 

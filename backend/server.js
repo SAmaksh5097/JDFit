@@ -37,3 +37,17 @@ app.get('/', (req,res)=>{
 // Routes
 app.use('/api/profile', profileRoutes);
 app.use('/api/resume', resumeRoutes);
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({ error: 'Route not found.' });
+});
+
+// Global error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    res.status(err.status || 500).json({
+        error: err.message || 'Internal server error.',
+        ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    });
+});

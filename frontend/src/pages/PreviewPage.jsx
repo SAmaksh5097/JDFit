@@ -78,11 +78,12 @@ const PreviewPage = ({ initialLatexCode = "" }) => {
   return (
     <>
       <HeaderMin/>
-      <div className="min-h-screen bg-black text-white p-6 max-w-[1600px] mx-auto flex flex-col">
+      <div className="min-h-screen bg-black text-white p-6 max-w-400 mx-auto flex flex-col">
         <div className="mb-8 flex items-center justify-between">
           <div className="flex flex-col gap-2">
             <input type="text" value={documentName} onChange={(e) => setDocumentName(e.target.value)} className="text-3xl font-bold mb-3 border p-0.5 rounded bg-transparent w-fit" />
             <input type="text" value={companyName} onChange={(e) => setCompanyName(e.target.value)} className="text-xl font-semibold text-gray-300 mb-2 border p-0.5 rounded bg-transparent w-fit" />
+            {/* ai generated summary of JD */}
             <p className="text-gray-400 text-base max-w-4xl leading-relaxed">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit possimus laudantium nisi modi aspernatur recusandae repellendus assumenda, perferendis quae quasi. 2-3 line AI generated summary of JD
             </p>
@@ -93,9 +94,9 @@ const PreviewPage = ({ initialLatexCode = "" }) => {
             </button>
           </div>
         </div>
-        <section className="grid grid-cols-1 lg:grid-cols-2 flex-grow gap-6 min-h-[75vh]">
+        <section className="grid grid-cols-1 lg:grid-cols-2 grow gap-6 min-h-[75vh]">
             <LaTeX value={latexCode} onChange={setLatexCode} />
-            <PdfView/>
+            <PdfView latexCode={latexCode} />
         </section>
       </div>
     </>
