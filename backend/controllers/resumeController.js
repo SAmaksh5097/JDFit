@@ -1,7 +1,7 @@
 import { getProfileById } from '../models/profileModel.js';
 import { encodeToTOON } from '../services/toonEncoder.js';
 import { generateTailoredResumeData } from '../services/aiService.js';
-import { saveResumeToDB, getResumesByUserId, getResumeByIdAndUser } from '../models/resumeModel.js';
+import { saveResumeToDB, getResumesByUserId, getResumeByIdAndUser, updateResumeToDB } from '../models/resumeModel.js';
 
 export const generateResume = async (req, res) => {
     try {
@@ -24,7 +24,7 @@ export const generateResume = async (req, res) => {
         const latexCode = await generateTailoredResumeData(toonProfile, jobDescription, instructions || '');
 
         // Automatically save to DB
-        const savedResume = await saveResumeToDB(userId, "Untitled Document", "Untitled company", latexCode);
+        const savedResume = await saveResumeToDB(userId, "Untitled Document", "Untitled company", latexCode, jobDescription);
 
         res.status(200).json({ latexCode, resumeId: savedResume.id });
 
@@ -69,4 +69,21 @@ export const getResume = async (req, res) => {
     }
 };
 
-export default { generateResume, getResumes, getResume };
+export const updateResume = async (req, res) => {
+    try {
+        const { userId, resumeName, companyName, latexCode, jobDescription = '' } = req.body;
+        const { id } = req.params;
+
+        if (!userId || !id) {
+            return res.status(400).json({ error: 'userId and resume id are required.' });
+        }
+
+        const updatedResume = await updateResumeToDB(id, userId, resumeName, companyName, latexCode, jobDescription);
+        res.status(200).json({ message: 'Resume updated successfully.', resume: updatedResume });
+    } catch (error) {
+        console.error('Error updating resume:', error);
+        res.status(500).json({ error: error.message || 'Failed to update resume.' });
+    }
+};
+
+export default { generateResume, getResumes, getResume, updateResume };

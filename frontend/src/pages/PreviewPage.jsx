@@ -13,9 +13,11 @@ const PreviewPage = ({ initialLatexCode = "" }) => {
   
   const [documentName, setDocumentName] = useState("Untitled Document")
   const [companyName, setCompanyName] = useState("Untitled company")
+  const [summary, setSummary] = useState("")
   const [latexCode, setLatexCode] = useState(initialLatexCode)
   const [loading, setLoading] = useState(!!id)
   const [error, setError] = useState(null)
+  const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     // If there's an ID in the URL, fetch it from DB
@@ -37,6 +39,7 @@ const PreviewPage = ({ initialLatexCode = "" }) => {
           const data = await response.json();
           setDocumentName(data.resume_name);
           setCompanyName(data.company_name);
+          setSummary(data.summary || '');
           setLatexCode(data.latex_code);
         } catch (err) {
           setError(err.message);
@@ -48,6 +51,40 @@ const PreviewPage = ({ initialLatexCode = "" }) => {
       fetchResume()
     }
   }, [id, isLoaded, userId, navigate])
+
+  const handleSave = async () => {
+    if (!id || !userId) {
+      alert('Resume ID or User ID not found.')
+      return
+    }
+
+    setSaving(true)
+    try {
+      const response = await fetch(`http://localhost:5000/api/resume/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          resumeName: documentName,
+          companyName,
+          jobDescription: summary,
+          latexCode
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to save resume.')
+      }
+
+      alert('Resume saved successfully!')
+    } catch (err) {
+      alert('Error saving resume: ' + (err.message || 'Unknown error'))
+    } finally {
+      setSaving(false)
+    }
+  }
 
   if (loading) {
     return (
@@ -83,14 +120,18 @@ const PreviewPage = ({ initialLatexCode = "" }) => {
           <div className="flex flex-col gap-2">
             <input type="text" value={documentName} onChange={(e) => setDocumentName(e.target.value)} className="text-3xl font-bold mb-3 border p-0.5 rounded bg-transparent w-fit" />
             <input type="text" value={companyName} onChange={(e) => setCompanyName(e.target.value)} className="text-xl font-semibold text-gray-300 mb-2 border p-0.5 rounded bg-transparent w-fit" />
-            {/* ai generated summary of JD */}
-            <p className="text-gray-400 text-base max-w-4xl leading-relaxed">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit possimus laudantium nisi modi aspernatur recusandae repellendus assumenda, perferendis quae quasi. 2-3 line AI generated summary of JD
+            {/* Job Description from pasted JD */}
+            <p className="text-gray-400 text-base max-w-4xl leading-relaxed whitespace-pre-wrap">
+              {summary || 'No job description provided'}
             </p>
           </div>
           <div>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Compile
+            <button 
+              onClick={handleSave}
+              disabled={saving}
+              className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-2 px-4 rounded transition-all"
+            >
+              {saving ? 'Saving...' : 'Save'}
             </button>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import express from 'express';
-import { generateResume, getResumes, getResume } from '../controllers/resumeController.js';
+import { generateResume, getResumes, getResume, updateResume } from '../controllers/resumeController.js';
 
 const router = express.Router();
 
@@ -8,6 +8,9 @@ router.post('/generate', generateResume);
 
 // GET /api/resume/user/:userId
 router.get('/user/:userId', getResumes);
+
+// PUT /api/resume/:id
+router.put('/:id', updateResume);
 
 // GET /api/resume/:id?userId=...
 router.get('/:id', getResume);
