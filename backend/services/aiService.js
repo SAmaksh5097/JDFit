@@ -81,7 +81,7 @@ Generate the tailored resume as valid LaTeX code. Pick only the top 2-3 most rel
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: process.env.GROQ_API_KEY ? 'openai/gpt-oss-120b' : 'openai/gpt-oss-120b',
+        model: process.env.GROQ_API_KEY ? 'llama-3.3-70b-versatile' : 'openai/gpt-oss-120b',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
