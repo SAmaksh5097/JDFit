@@ -75,8 +75,9 @@ const Dashboard = () => {
                     </div>
                     <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                         {loading ? (
-                            <div className="flex justify-center p-8 col-span-full">
+                            <div className="flex justify-center p-8 col-span-full items-center gap-2">
                                 <Loader2Icon className="h-8 w-8 animate-spin text-blue-500" />
+                                <h1 className="text-center">Hang on... We're still on free tier backend 😅</h1>
                             </div>
                         ) : error ? (
                             <div className="text-red-500 col-span-full">{error}</div>
