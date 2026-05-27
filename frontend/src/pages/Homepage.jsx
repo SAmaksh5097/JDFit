@@ -4,7 +4,7 @@ import HeroSection from "../components/HeroSection"
 
 const Homepage = () => {
   return (
-    <div className="min-h-screen w-full flex flex-col ">
+    <div className="min-h-screen w-full flex flex-col gap-2 ">
         <Header/>
         <HeroSection/>
         <Features/>
